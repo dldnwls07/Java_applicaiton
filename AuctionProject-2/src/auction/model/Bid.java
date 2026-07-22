@@ -34,9 +34,26 @@ public class Bid {
     }
 
     public static Bid fromCsvString(String line) {
-        String[] values = line.split(",", -1);
-        if (values.length != 5) throw new IllegalArgumentException("입찰 CSV 열 개수가 올바르지 않습니다.");
-        return new Bid(Integer.parseInt(values[0]), Integer.parseInt(values[1]), values[2],
-                Integer.parseInt(values[3]), values[4]);
+        try {
+            String[] values = line.split(",", -1);
+
+            if (values.length != 5) {
+                return null;
+            }
+
+            int bidId = Integer.parseInt(values[0]);
+            int productId = Integer.parseInt(values[1]);
+            int bidPrice = Integer.parseInt(values[3]);
+
+            return new Bid(
+                    bidId,
+                    productId,
+                    values[2],
+                    bidPrice,
+                    values[4]
+            );
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
